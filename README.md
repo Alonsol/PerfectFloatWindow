@@ -15,16 +15,28 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
  
  6. 支持应用内以及应用外全局弹窗
 
+ 7. 权限开启弹窗支持用户自定义
+
 ### 1.初始化悬浮窗控件
 ``` kotlin
-        var view = View.inflate(this, R.layout.float_view, null)
-        ivIcon = view.findViewById(R.id.ivIcon)
-        tvContent = view.findViewById(R.id.tvContent)
-
+        //定义悬浮窗助手
         floatHelper = FloatClient.Builder()
             .with(this)
-            .addView(view) //添加悬浮窗内容
-            .setClickTarget(MainActivity::class.java) //点击跳转目标
+            .addView(view)
+            //是否需要展示默认权限提示弹窗，建议使用自己的项目中弹窗样式（默认开启）
+            .enableDefaultPermissionDialog(false)
+            .setClickTarget(MainActivity::class.java)
+            .addPermissionCallback(object : IFloatPermissionCallback {
+                override fun onPermissionResult(granted: Boolean) {
+                    //（建议使用addPermissionCallback回调中添加自己的弹窗）
+                    Toast.makeText(this@MainActivity, "granted -> $granted", Toast.LENGTH_SHORT)
+                        .show()
+                    if (!granted) {
+                        //申请权限
+                        floatHelper?.requestPermission()
+                    }
+                }
+            })
             .build()
 ```
 
@@ -56,6 +68,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
     private fun initCountDown() {
         countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                //更新悬浮窗内容（这里根据自己的业务进行扩展）
                 tvContent.text = getLeftTime(millisUntilFinished)
             }
 
