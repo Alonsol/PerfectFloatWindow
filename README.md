@@ -1,5 +1,5 @@
 # PerfectFloatWindow
-android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，三星，魅族，索尼，LG,IQOO,努比亚，中兴，金立，360，锤子等目前是市面上主流机型包括非主流机型，兼容4.4以上所有版本。调用方便，配置少，后续会新增更多功能
+android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，三星，魅族，索尼，LG,IQOO,努比亚，中兴，金立，360，锤子等目前是市面上主流机型包括非主流机型，兼容4.4以上包括android11版本。调用方便，配置少，后续会新增更多功能
 
 
 # 特性
@@ -112,3 +112,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
 ``` android
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
  ```
+
+
+### 结语
+    PerfectFloatWindow做了大量的机型测试，满足绝大部分市场上机型，欢迎大家提供宝贵意见
