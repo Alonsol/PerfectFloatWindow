@@ -11,6 +11,8 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
  4. 支持悬浮窗手势滑动
  
  5. 适配vivo，oppo等第三方权限管理器跳转  
+ 
+ 6. 支持应用内以及应用外全局弹窗
 
 ### 1.初始化悬浮窗控件
 ``` kotlin
@@ -69,3 +71,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
         return formatter.format(time)
     }
 ```
+### 7.权限申请
+``` android
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+ ```
