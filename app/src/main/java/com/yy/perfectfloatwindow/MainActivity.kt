@@ -70,4 +70,9 @@ class MainActivity : AppCompatActivity() {
         return formatter.format(time)
     }
 
+
+    override fun onDestroy() {
+        super.onDestroy()
+        floatHelper?.release()
+    }
 }
