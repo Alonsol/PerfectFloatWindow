@@ -101,7 +101,9 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         countDownTimer?.cancel()
     }
 
-
+    /**
+     * 释放资源
+     */
     override fun releaseResource() {
         serviceConnection?.let {
             builder.context?.unbindService(it)
