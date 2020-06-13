@@ -20,22 +20,27 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
 
         floatHelper = FloatClient.Builder()
             .with(this)
-            .addView(view)
-            .setClickTarget(MainActivity::class.java)
+            .addView(view) //添加悬浮窗内容
+            .setClickTarget(MainActivity::class.java) //点击跳转目标
             .build()
 ```
 
-### 2.开启悬浮窗
+### 2.设置点击跳转目标
+``` kotlin
+    setClickTarget(MainActivity::class.java)
+```
+
+### 3.开启悬浮窗
 ``` kotlin
     floatHelper?.show()
 ```
 
-### 3.关闭悬浮窗
+### 4.关闭悬浮窗
 ``` kotlin
     floatHelper?.dismiss()
 ```
 
-### 4.关闭悬浮窗并释放资源
+### 5.关闭悬浮窗并释放资源
 ``` kotlin
     override fun onDestroy() {
         super.onDestroy()
@@ -43,7 +48,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
     }
 ```
 
-### 5.更新悬浮窗控件
+### 6.更新悬浮窗控件
 ``` kotlin
     private fun initCountDown() {
         countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
