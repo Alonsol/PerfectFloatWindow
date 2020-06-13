@@ -15,35 +15,70 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
  
  6. 支持应用内以及应用外全局弹窗
 
+ 7. 权限开启弹窗支持用户自定义
+
 ### 1.初始化悬浮窗控件
 ``` kotlin
-        var view = View.inflate(this, R.layout.float_view, null)
-        ivIcon = view.findViewById(R.id.ivIcon)
-        tvContent = view.findViewById(R.id.tvContent)
-
+        //定义悬浮窗助手
         floatHelper = FloatClient.Builder()
             .with(this)
-            .addView(view) //添加悬浮窗内容
-            .setClickTarget(MainActivity::class.java) //点击跳转目标
+            .addView(view)
+            //是否需要展示默认权限提示弹窗，建议使用自己的项目中弹窗样式（默认开启）
+            .enableDefaultPermissionDialog(false)
+            .setClickTarget(MainActivity::class.java)
+            .addPermissionCallback(object : IFloatPermissionCallback {
+                override fun onPermissionResult(granted: Boolean) {
+                    //（建议使用addPermissionCallback回调中添加自己的弹窗）
+                    Toast.makeText(this@MainActivity, "granted -> $granted", Toast.LENGTH_SHORT)
+                        .show()
+                    if (!granted) {
+                        //申请权限
+                        floatHelper?.requestPermission()
+                    }
+                }
+            })
             .build()
 ```
 
-### 2.设置点击跳转目标
+### 2.开启默认弹窗,默认开启（建议开发者根据自己的项目样式进行）
+``` kotlin
+    enableDefaultPermissionDialog(true)
+```
+### 3.悬浮窗权限回调 用户设置该回调后，可以处理自己的回调逻辑，设置该监听后，enableDefaultPermissionDialog选项失效
+``` kotlin
+    addPermissionCallback(object : IFloatPermissionCallback {
+                override fun onPermissionResult(granted: Boolean) {
+                    //（建议使用addPermissionCallback回调中添加自己的弹窗）
+                    Toast.makeText(this@MainActivity, "granted -> $granted", Toast.LENGTH_SHORT)
+                        .show()
+                    if (!granted) {
+                        //申请权限
+                        floatHelper?.requestPermission()
+                    }
+                }
+            })
+```
+### 4.申请悬浮窗权限
+``` kotlin
+    requestPermission()
+```
+
+### 5.设置点击跳转目标
 ``` kotlin
     setClickTarget(MainActivity::class.java)
 ```
 
-### 3.开启悬浮窗
+### 6.开启悬浮窗
 ``` kotlin
     floatHelper?.show()
 ```
 
-### 4.关闭悬浮窗
+### 7.关闭悬浮窗
 ``` kotlin
     floatHelper?.dismiss()
 ```
 
-### 5.关闭悬浮窗并释放资源
+### 8.关闭悬浮窗并释放资源
 ``` kotlin
     override fun onDestroy() {
         super.onDestroy()
@@ -51,11 +86,12 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
     }
 ```
 
-### 6.更新悬浮窗控件
+### 9.更新悬浮窗控件
 ``` kotlin
     private fun initCountDown() {
         countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
             override fun onTick(millisUntilFinished: Long) {
+                //更新悬浮窗内容（这里根据自己的业务进行扩展）
                 tvContent.text = getLeftTime(millisUntilFinished)
             }
 
@@ -72,7 +108,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
         return formatter.format(time)
     }
 ```
-### 7.权限申请
+### 10.权限申请
 ``` android
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
  ```
