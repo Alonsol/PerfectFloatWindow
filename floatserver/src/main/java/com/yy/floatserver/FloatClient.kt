@@ -43,7 +43,7 @@ class FloatClient private constructor(private val builder: Builder) : FloatHelpe
         internal var view: View? = null
         internal var clazz: Class<*>? = null
         internal var context: Context? = null
-        internal var enableDefaultPermissionDialog = true
+        internal var enableDefaultPermissionDialog = false
         internal var callback: IFloatPermissionCallback? = null
 
         fun with(context: Context) = apply {

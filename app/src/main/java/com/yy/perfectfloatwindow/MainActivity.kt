@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
         floatHelper = FloatClient.Builder()
             .with(this)
             .addView(view)
-            //是否需要展示默认权限提示弹窗，建议使用自己的项目中弹窗样式
-            .enableDefaultPermissionDialog(false)
+            //是否需要展示默认权限提示弹窗，建议使用自己的项目中弹窗样式（默认开启）
+            .enableDefaultPermissionDialog(true)
             .setClickTarget(MainActivity::class.java)
             .addPermissionCallback(object : IFloatPermissionCallback {
                 override fun onPermissionResult(granted: Boolean) {

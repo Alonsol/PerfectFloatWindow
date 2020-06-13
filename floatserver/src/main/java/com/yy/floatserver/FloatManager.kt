@@ -49,9 +49,10 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         } else {
             if (builder.callback != null) {
                 builder.callback?.onPermissionResult(false)
-            }
-            if (builder.enableDefaultPermissionDialog){
-                showPermissionDialog()
+            } else {
+                if (builder.enableDefaultPermissionDialog) {
+                    showPermissionDialog()
+                }
             }
         }
 
