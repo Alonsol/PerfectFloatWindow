@@ -30,7 +30,10 @@ import android.provider.Settings;
 import android.util.Log;
 import java.lang.reflect.Method;
 
-
+/**
+ * Created by yy on 2020/6/13.
+ * function: 权限判断与跳转
+ */
 public class SettingsCompat {
     private static final String TAG = "ezy-settings-compat";
 
@@ -45,24 +48,6 @@ public class SettingsCompat {
         } else {
             return true;
         }
-    }
-
-    public static boolean canWriteSettings(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            return Settings.System.canWrite(context);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            return checkOp(context, OP_WRITE_SETTINGS);
-        } else {
-            return true;
-        }
-    }
-
-    public static boolean setDrawOverlays(Context context, boolean allowed) {
-        return setMode(context, OP_SYSTEM_ALERT_WINDOW, allowed);
-    }
-
-    public static boolean setWriteSettings(Context context, boolean allowed) {
-        return setMode(context, OP_WRITE_SETTINGS, allowed);
     }
 
     public static void manageDrawOverlays(Context context) {
@@ -82,13 +67,6 @@ public class SettingsCompat {
         }
     }
 
-    public static void manageWriteSettings(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS);
-            intent.setData(Uri.parse("package:" + context.getPackageName()));
-            context.startActivity(intent);
-        }
-    }
 
     private static boolean manageDrawOverlaysForRom(Context context) {
         if (RomUtil.isMiui()) {
@@ -175,7 +153,6 @@ public class SettingsCompat {
             return true;
         }
         // miui v5 的支持的android版本最高 4.x
-        // http://www.romzj.com/list/search?keyword=MIUI%20V5#search_result
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             Intent intent1 = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent1.setData(Uri.fromParts("package", context.getPackageName(), null));
@@ -302,16 +279,13 @@ public class SettingsCompat {
             // 锤子 坚果|5.1.1|2.5.3
             Intent intent = new Intent("com.smartisanos.security.action.SWITCHED_PERMISSIONS_NEW");
             intent.setClassName("com.smartisanos.security", "com.smartisanos.security.SwitchedPermissions");
-            intent.putExtra("index", 17); // 不同版本会不一样
+            intent.putExtra("index", 17);
             return startSafely(context, intent);
         } else {
             // 锤子 坚果|4.4.4|2.1.2
             Intent intent = new Intent("com.smartisanos.security.action.SWITCHED_PERMISSIONS");
             intent.setClassName("com.smartisanos.security", "com.smartisanos.security.SwitchedPermissions");
             intent.putExtra("permission", new String[]{Manifest.permission.SYSTEM_ALERT_WINDOW});
-
-            //        Intent intent = new Intent("com.smartisanos.security.action.MAIN");
-            //        intent.setClassName("com.smartisanos.security", "com.smartisanos.security.MainActivity");
             return startSafely(context, intent);
         }
     }

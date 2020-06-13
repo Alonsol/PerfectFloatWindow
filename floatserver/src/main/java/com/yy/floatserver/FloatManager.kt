@@ -36,12 +36,23 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         }
     }
 
+    override fun requestPermission() {
+        SettingsCompat.manageDrawOverlays(builder.context)
+        initCountDown()
+    }
+
     override fun showFloat() {
 
         if (SettingsCompat.canDrawOverlays(builder.context?.applicationContext)) {
             showFloatWindow()
+            builder.callback?.onPermissionResult(true)
         } else {
-            showPermissionDialog()
+            if (builder.callback != null) {
+                builder.callback?.onPermissionResult(false)
+            }
+            if (builder.enableDefaultPermissionDialog){
+                showPermissionDialog()
+            }
         }
 
     }
@@ -66,9 +77,7 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         builder.setPositiveButton(
             "确定"
         ) { dialog, _ ->
-            Toast.makeText(builder.context, "你点击了确定", Toast.LENGTH_SHORT).show()
-            SettingsCompat.manageDrawOverlays(builder.context)
-            initCountDown()
+            requestPermission()
             dialog.dismiss()
         }
         builder.setNegativeButton(
@@ -81,10 +90,12 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
     }
 
     private fun initCountDown() {
+        countDownTimer?.cancel()
         countDownTimer = object : CountDownTimer(Long.MAX_VALUE, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if (SettingsCompat.canDrawOverlays(builder.context)) {
                     showFloatWindow()
+                    countDownTimer?.cancel()
                 }
             }
 

@@ -8,6 +8,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+/**
+ * Created by yy on 2020/6/13.
+ * function: Rom类型
+ */
 public class RomUtil {
 	private static final String TAG = "RomUtil";
 
@@ -30,28 +35,6 @@ public class RomUtil {
 	private static final String KEY_VERSION_OPPO = "ro.build.version.opporom";
 	private static final String KEY_VERSION_SMARTISAN = "ro.smartisan.version";
 	private static final String KEY_VERSION_VIVO = "ro.vivo.os.version";
-	private static final String KEY_VERSION_GIONEE = "ro.gn.sv.version";
-	private static final String KEY_VERSION_LENOVO = "ro.lenovo.lvp.version";
-	private static final String KEY_VERSION_FLYME = "ro.build.display.id";
-
-
-	private static final String KEY_EMUI_VERSION_CODE = "ro.build.hw_emui_api_level";
-
-	private static final String KEY_MIUI_VERSION_CODE = "ro.miui.ui.version.code";
-	private static final String KEY_MIUI_HANDY_MODE_SF = "ro.miui.has_handy_mode_sf";
-	private static final String KEY_MIUI_REAL_BLUR = "ro.miui.has_real_blur";
-
-	private static final String KEY_FLYME_PUBLISHED = "ro.flyme.published";
-	private static final String KEY_FLYME_FLYME = "ro.meizu.setupwizard.flyme";
-
-	private static final String KEY_FLYME_ICON_FALG = "persist.sys.use.flyme.icon";
-	private static final String KEY_FLYME_SETUP_FALG = "ro.meizu.setupwizard.flyme";
-	private static final String KEY_FLYME_PUBLISH_FALG = "ro.flyme.published";
-
-	private static final String KEY_VIVO_OS_NAME = "ro.vivo.os.name";
-	private static final String KEY_VIVO_OS_VERSION = "ro.vivo.os.version";
-	private static final String KEY_VIVO_ROM_VERSION = "ro.vivo.rom.version";
-
 
 	// 乐视 : eui
 	private static final String KEY_EUI_VERSION = "ro.letv.release.version"; // "5.9.023S"
@@ -66,8 +49,6 @@ public class RomUtil {
 	// 酷派 : yulong
 	private static final String KEY_YULONG_VERSION_RELEASE = "ro.yulong.version.release"; // "5.1.046.P1.150921.8676_M01"
 	private static final String KEY_YULONG_VERSION_TAG = "ro.yulong.version.tag"; // "LC"
-
-	private static final String VALUE_YULONG_CLIENT_ID_BASE = "android-coolpad";
 
 	public static boolean isEmui() {
 		return check(ROM_EMUI);
@@ -89,18 +70,6 @@ public class RomUtil {
 		return check(ROM_FLYME);
 	}
 
-	public static boolean isYulong() {
-		return check(ROM_YULONG);
-	}
-
-	public static boolean isEUI() {
-		return check(ROM_EUI);
-	}
-
-	public static boolean isAmigo() {
-		return true;
-	}
-
 	public static boolean isQiku() {
 		return check(ROM_QIKU) || check("360");
 	}
@@ -109,9 +78,6 @@ public class RomUtil {
 		return check(ROM_SMARTISAN);
 	}
 
-	public static boolean isSamsung() {
-		return getManufacturer().toLowerCase().contains("samsung");
-	}
 
 	private static String sName;
 
@@ -131,10 +97,6 @@ public class RomUtil {
 		return sVersion;
 	}
 
-
-	private static String getManufacturer() {
-		return (Build.MANUFACTURER) == null ? "" : (Build.MANUFACTURER).trim();
-	}
 
 	public static boolean check(String rom) {
 		if (sName != null) {

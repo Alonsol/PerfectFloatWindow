@@ -17,7 +17,7 @@ import kotlin.math.abs
 
 
 /**
- * Created by yuyang
+ * Created by yy
  * @description: 悬浮窗服务
  */
 class FloatingServer : Service() {
@@ -45,6 +45,9 @@ class FloatingServer : Service() {
         initClick()
     }
 
+    /**
+     * 初始化窗口配置
+     */
     private fun initWindowParams() {
         mWindowManager = application.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         wmParams = WindowManager.LayoutParams()
@@ -81,9 +84,13 @@ class FloatingServer : Service() {
         mFloatBinder = FloatBinder()
     }
 
+    /**
+     * 添加view
+     */
     private fun addWindowView2Window(view: View) {
         if (!hasAdded) {
             try {
+                removeParentView(view)
                 view.layoutParams = mParams
                 mContainer.addView(view)
                 mWindowManager.addView(mWindowView, wmParams)
@@ -105,7 +112,20 @@ class FloatingServer : Service() {
         }
     }
 
+    /**
+     * 移除view的父控件
+     */
+    private fun removeParentView(view: View) {
+        val parent: ViewParent? = view.parent
+        if (parent != null && parent is FrameLayout) {
+            (parent as FrameLayout).removeView(view)
+        }
+    }
 
+
+    /**
+     * 移除控件
+     */
     private fun removeWindowView() {
         if (hasAdded) {
             //移除悬浮窗口
@@ -175,7 +195,8 @@ class FloatingServer : Service() {
      * @return true:拦截;false:不拦截.
      */
     private fun needIntercept(): Boolean {
-        return abs(mStartX - mEndX) > 30 || abs(mStartY - mEndY) > 30
+
+        return abs(mStartX - mEndX) > ViewConfiguration.getTouchSlop() || abs(mStartY - mEndY) > ViewConfiguration.getTouchSlop()
     }
 
 
