@@ -1,0 +1,2 @@
+*.java linguist-language=HTML
+*.kotlin linguist-language=HTML
