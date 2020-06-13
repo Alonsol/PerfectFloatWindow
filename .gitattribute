@@ -1,4 +1,4 @@
 
-*.js linguist-language=kotlin
-*.css linguist-language=kotlin
-*.html linguist-language=kotlin
+*.java linguist-language=java
+*.kt linguist-language=kotlin
+*.kt linguist-language=kt 
