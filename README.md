@@ -49,8 +49,7 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
     addPermissionCallback(object : IFloatPermissionCallback {
                 override fun onPermissionResult(granted: Boolean) {
                     //（建议使用addPermissionCallback回调中添加自己的弹窗）
-                    Toast.makeText(this@MainActivity, "granted -> $granted", Toast.LENGTH_SHORT)
-                        .show()
+                    //granted = true 权限通过 granted = false 权限拒绝
                     if (!granted) {
                         //申请权限
                         floatHelper?.requestPermission()
@@ -60,12 +59,12 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
 ```
 ### 4.申请悬浮窗权限
 ``` kotlin
-    requestPermission()
+    floatHelper?.requestPermission()
 ```
 
 ### 5.设置点击跳转目标
 ``` kotlin
-    setClickTarget(MainActivity::class.java)
+    floatHelper?.setClickTarget(MainActivity::class.java)
 ```
 
 ### 6.开启悬浮窗
