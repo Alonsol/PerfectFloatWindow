@@ -36,6 +36,7 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         }
     }
 
+
     override fun requestPermission() {
         SettingsCompat.manageDrawOverlays(builder.context)
         initCountDown()
