@@ -70,6 +70,7 @@ class FloatManager(private val builder: FloatClient.Builder) : IFloatWindowHandl
         floatBinder?.setClazz(builder.clazz)
     }
 
+
     private fun showPermissionDialog() {
         val builder = AlertDialog.Builder(builder.context)
         builder.setTitle("提示")
