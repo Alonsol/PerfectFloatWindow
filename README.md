@@ -111,7 +111,10 @@ android悬浮窗，目前已经适配华为，小米，vivo，oppo，一加，�
 ``` android
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
  ```
-
+### 11.配置
+``` 
+    implementation 'com.alonsol:floatserver:1.0.0'
+ ```
 
 ### 结语
     PerfectFloatWindow做了大量的机型测试，满足绝大部分市场上机型，欢迎大家提供宝贵意见
