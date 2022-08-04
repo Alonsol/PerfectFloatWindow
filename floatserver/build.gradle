@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 31
@@ -34,4 +35,15 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            groupId = "com.alonsol"
+            artifactId = "floatserver"
+            version = "1.0.0"
+            description = "perfect float window, tested on all android device"
+        }
+    }
 }
