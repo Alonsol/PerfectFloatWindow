@@ -37,6 +37,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
 publishing {
     publications {
         Production(MavenPublication) {
@@ -44,6 +49,8 @@ publishing {
             artifactId = "floatserver"
             version = "1.0.0"
             description = "perfect float window, tested on all android device"
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
+            artifact generateSourcesJar
         }
     }
 }
