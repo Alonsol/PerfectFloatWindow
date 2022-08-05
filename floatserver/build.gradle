@@ -1,15 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven-publish'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 31
+    buildToolsVersion "31.0.0"
 
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
@@ -37,12 +37,20 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 }
 
-//添加
-publish {
-    userOrg = 'alonaol'//bintray.com用户名
-    groupId = 'com.alonsol'//jcenter上的路径
-    artifactId = 'floatserver'//项目名称
-    publishVersion = '1.0.0'//版本号
-    desc = 'perfect float window ,test on all android device'//描述，不重要
-    website = 'https://github.com/Alonsol/PerfectFloatWindow.git'//网站，不重要
+task generateSourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier 'sources'
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            groupId = "com.alonsol"
+            artifactId = "floatserver"
+            version = "1.0.0"
+            description = "perfect float window, tested on all android device"
+            afterEvaluate { artifact(tasks.getByName("bundleReleaseAar")) }
+            artifact generateSourcesJar
+        }
+    }
 }
